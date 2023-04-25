@@ -1,0 +1,12 @@
+<div class="modal-header">
+  <div class="modal-title">查看 {{ record.deviceSerial }} 信息</div>
+</div>
+<nz-spin *ngIf="!i" class="modal-spin"></nz-spin>
+<div sv-container *ngIf="i">
+  <sv label="设备序号">{{ i.deviceSerial }}</sv>
+  <sv label="验证码">{{ i.verifyCode }}</sv>
+  <sv label="设备名称">{{ i.name }}</sv>
+</div>
+<div class="modal-footer">
+  <button nz-button type="button" (click)="close()">关闭</button>
+</div>

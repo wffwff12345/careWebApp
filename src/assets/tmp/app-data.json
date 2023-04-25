@@ -1,0 +1,99 @@
+{
+  "app": {
+    "name": "养老无忧管理系统",
+    "description": "养老无忧管理系统"
+  },
+  "user": {
+    "name": "Admin",
+    "avatar": "./assets/tmp/img/avatar.jpg",
+    "email": "cipchk@qq.com"
+  },
+  "menu": [
+    {
+      "text": "主导航",
+      "i18n": "menu.main",
+      "group": true,
+      "hideInBreadcrumb": true,
+      "children": [
+        {
+          "text": "仪表盘",
+          "i18n": "menu.dashboard",
+          "icon": "anticon-dashboard",
+          "children": [
+            {
+              "text": "仪表盘V1",
+              "link": "/dashboard/v1",
+              "i18n": "menu.dashboard.v1"
+            },
+            {
+              "text": "分析页",
+              "link": "/dashboard/analysis",
+              "i18n": "menu.dashboard.analysis"
+            },
+            {
+              "text": "监控页",
+              "link": "/dashboard/monitor",
+              "i18n": "menu.dashboard.monitor"
+            },
+            {
+              "text": "工作台",
+              "link": "/dashboard/workplace",
+              "i18n": "menu.dashboard.workplace"
+            }
+          ]
+        },
+        {
+          "text": "摄像头管理",
+          "i18n": "menu.camera",
+          "link": "/camera/curd",
+          "icon": "anticon-camera"
+        },
+        {
+          "text": "社区管理",
+          "i18n": "menu.community",
+          "link": "/community/curd",
+          "icon": "anticon-home"
+        },
+        {
+          "text": "服务管理",
+          "i18n": "menu.serve",
+          "icon": "anticon-gold",
+          "children": [
+            {
+              "text": "服务类别列表",
+              "link": "/serve/service-category-curd",
+              "i18n": "menu.serve.category"
+            },
+            {
+              "text": "服务列表",
+              "link": "/serve/service-curd",
+              "i18n": "menu.serve.list"
+            }
+          ]
+        },
+        {
+          "text": "系统管理",
+          "i18n": "menu.system",
+          "icon": "anticon-setting",
+          "children": [
+            {
+              "text": "系统支付设置",
+              "i18n": "menu.system.pay",
+              "link": "/system/pay-curd"
+            },
+            {
+              "text": "小程序推荐设置",
+              "i18n": "menu.system.recommend",
+              "link": "/system/recommend-curd"
+            },
+            {
+              "text": "用户列表",
+              "i18n": "menu.system.user",
+              "link": "/system/user-curd"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
