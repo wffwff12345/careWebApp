@@ -1,0 +1,17 @@
+<div class="container">
+  <header-i18n showLangText="false" class="langs"></header-i18n>
+  <div class="wrap">
+    <div class="top">
+      <div class="head">
+        <!-- logo图标 -->
+        <span class="title">{{ app.name }}</span>
+      </div>
+      <div class="desc">{{ app.description }}</div>
+    </div>
+    <router-outlet></router-outlet>
+    <global-footer>
+      Copyright
+      <i nz-icon nzType="copyright"></i> 2023 <a href="{{ baseUrl }}" target="_blank">健康养老管理系统</a>
+    </global-footer>
+  </div>
+</div>
