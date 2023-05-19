@@ -79,6 +79,7 @@ import { GlobalConfigModule } from './global-config.module';
 import { LayoutModule } from './layout/layout.module';
 import { RoutesModule } from './routes/routes.module';
 import { SharedModule } from './shared/shared.module';
+import { STWidgetModule } from './shared/st-widget/st-widget.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -91,6 +92,7 @@ import { SharedModule } from './shared/shared.module';
     SharedModule,
     LayoutModule,
     RoutesModule,
+    STWidgetModule,
     NzMessageModule,
     NzNotificationModule,
     ...FORM_MODULES,
