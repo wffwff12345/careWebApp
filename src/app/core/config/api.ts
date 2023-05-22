@@ -4,13 +4,13 @@ import { Injectable } from '@angular/core';
 export class Api {
   public static readonly login: string = '/login';
 
-  static camera = class {
-    public static readonly add: string = '/api/camera';
-    public static readonly delete: string = '/api/camera/';
-    public static readonly deleteList: string = '/api/camera/delete';
-    public static readonly update: string = '/api/camera/';
-    public static readonly getCamera: string = '/api/camera/';
-    public static readonly cameraList: string = '/api/camera/page';
+  static device = class {
+    public static readonly add: string = '/api/device';
+    public static readonly delete: string = '/api/device/';
+    public static readonly deleteList: string = '/api/device/delete';
+    public static readonly update: string = '/api/device/';
+    public static readonly getDevice: string = '/api/device/';
+    public static readonly deviceList: string = '/api/device/page';
   };
 
   static community = class {
@@ -56,5 +56,13 @@ export class Api {
     public static readonly update: string = '/api/recommend/';
     public static readonly getRecommend: string = '/api/recommend/';
     public static readonly recommendList: string = '/api/recommend/page';
+  };
+
+  static user = class {
+    public static readonly userList: string = '/api/user/page';
+  };
+
+  static upload = class {
+    public static readonly addPicture: string = '/api/upload';
   };
 }

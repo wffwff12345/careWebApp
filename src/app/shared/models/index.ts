@@ -1,1 +1,1 @@
-export * from './camera.model';
+export * from './device.model';

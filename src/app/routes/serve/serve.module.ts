@@ -1,5 +1,6 @@
 import { NgModule, Type } from '@angular/core';
 import { SharedModule } from '@shared';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
 
 import { ServeRoutingModule } from './serve-routing.module';
 import { ServeServiceCategoryCurdEditComponent } from './service-category-curd/edit/edit.component';
@@ -19,7 +20,7 @@ const COMPONENTS: Array<Type<void>> = [
 ];
 
 @NgModule({
-  imports: [SharedModule, ServeRoutingModule],
+  imports: [SharedModule, ServeRoutingModule, NzUploadModule],
   declarations: COMPONENTS
 })
 export class ServeModule {}

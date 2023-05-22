@@ -1,6 +1,7 @@
 const prettierConfig = require('./.prettierrc.js');
 
 module.exports = {
+
   root: true,
   parserOptions: { ecmaVersion: 2021 },
   overrides: [
@@ -84,6 +85,9 @@ module.exports = {
             }
           }
         ],
+        "no-empty-function": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "@angular-eslint/no-empty-lifecycle-method": "off",
         'import/no-duplicates': 'error',
         'import/no-unused-modules': 'error',
         'import/no-unassigned-import': 'error',

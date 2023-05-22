@@ -43,9 +43,9 @@
           ]
         },
         {
-          "text": "摄像头管理",
-          "i18n": "menu.camera",
-          "link": "/camera/curd",
+          "text": "设备管理",
+          "i18n": "menu.device",
+          "link": "/device/curd",
           "icon": "anticon-camera"
         },
         {

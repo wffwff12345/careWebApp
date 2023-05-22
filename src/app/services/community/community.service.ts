@@ -7,7 +7,11 @@ export class CommunityService {
   constructor(private http: HttpClient) {}
 
   findList(data?: any) {
-    return this.http.get(Api.community.communityList, data);
+    if (data == null) {
+      return this.http.get(Api.community.communityList);
+    }
+    const params = new HttpParams().append('name', data);
+    return this.http.get(Api.community.communityList, { params: params });
   }
 
   findById(id: any) {
@@ -15,7 +19,7 @@ export class CommunityService {
   }
 
   update(data: any, id: any) {
-    return this.http.post(Api.community.update + id, data);
+    return this.http.put(Api.community.update + id, data);
   }
 
   save(data: any) {
@@ -24,5 +28,9 @@ export class CommunityService {
 
   delete(id: any) {
     return this.http.delete(Api.community.delete + id);
+  }
+
+  deleteList(data: any) {
+    return this.http.post(Api.community.deleteList, data);
   }
 }

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { CameraCurdComponent } from './curd/curd.component';
+import { DeviceCurdComponent } from './curd/curd.component';
 
-const routes: Routes = [{ path: 'curd', component: CameraCurdComponent }];
+const routes: Routes = [{ path: 'curd', component: DeviceCurdComponent }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CameraRoutingModule {}
+export class DeviceRoutingModule {}

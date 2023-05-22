@@ -36,7 +36,6 @@ export class SystemRecommendCurdComponent implements OnInit {
       buttons: [
         {
           text: '查看',
-          icon: 'view',
           type: 'modal',
           modal: { component: SystemRecommendCurdViewComponent },
           click: (_record, modal) => this.message.success(`重新加载页面，回传值：${JSON.stringify(modal)}`)

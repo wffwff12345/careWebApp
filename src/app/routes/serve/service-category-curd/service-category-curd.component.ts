@@ -1,5 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { STColumn, STComponent, STChange, STClickRowClassNameType } from '@delon/abc/st';
+import {
+  STColumn,
+  STComponent,
+  STChange,
+  STClickRowClassNameType,
+  STContextmenuFn,
+  STContextmenuItem,
+  STContextmenuOptions
+} from '@delon/abc/st';
 import { SFSchema } from '@delon/form';
 import { ModalHelper, _HttpClient } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -13,6 +21,7 @@ import { ServeServiceCategoryCurdViewComponent } from './view/view.component';
 })
 export class ServeServiceCategoryCurdComponent implements OnInit {
   category: any;
+  delete: any = [];
   searchSchema: SFSchema = {
     properties: {
       name: {
@@ -24,25 +33,40 @@ export class ServeServiceCategoryCurdComponent implements OnInit {
   clickRowClassName: STClickRowClassNameType = { exclusive: true, fn: () => 'text-error' };
   @ViewChild('st') private readonly st!: STComponent;
   columns: STColumn[] = [
-    { title: '服务类别ID', index: 'id', sort: true },
+    { title: '服务类别ID', index: 'id', type: 'checkbox' },
     { title: '服务类别编号', index: 'no', sort: true },
     { title: '服务类别名称', index: 'name' },
     {
-      title: '',
+      title: '操作',
       buttons: [
         {
           text: '查看',
-          icon: 'view',
           type: 'modal',
-          modal: { component: ServeServiceCategoryCurdViewComponent },
-          click: (_record, modal) => this.message.success(`重新加载页面，回传值：${JSON.stringify(modal)}`)
+          modal: { component: ServeServiceCategoryCurdViewComponent }
         },
         {
           text: '编辑',
           icon: 'edit',
           type: 'modal',
-          modal: { component: ServeServiceCategoryCurdEditComponent },
-          click: (_record, modal) => this.message.success(`重新加载页面，回传值：${JSON.stringify(modal)}`)
+          modal: {
+            component: ServeServiceCategoryCurdEditComponent,
+            params(record): any {
+              return (record.flag = true);
+            }
+          },
+          click: (_record, modal) => this.findCategoryList()
+        },
+        {
+          text: '删除',
+          icon: 'delete',
+          click: i => {
+            this.service.delete(i.id).subscribe((res: any) => {
+              if (res.error == '0') {
+                this.message.success('成功删除');
+                this.findCategoryList();
+              }
+            });
+          }
         }
       ]
     }
@@ -54,18 +78,60 @@ export class ServeServiceCategoryCurdComponent implements OnInit {
     this.findCategoryList();
   }
 
-  add(): void {
-    this.modal.createStatic(ServeServiceCategoryCurdEditComponent, { i: { id: 0 } }).subscribe(() => this.st.reload());
+  search(event: any): void {
+    const name = `~=${event.name}` + '';
+    this.findCategoryList(name);
   }
 
-  findCategoryList(): void {
-    this.service.findList().subscribe((res: any) => {
-      console.log(res);
+  reset(event: any): void {
+    this.findCategoryList();
+  }
+
+  add(): void {
+    this.modal.createStatic(ServeServiceCategoryCurdEditComponent, { record: { flag: false } }).subscribe(() => this.findCategoryList());
+  }
+
+  findCategoryList(name?: any): void {
+    this.service.findList(name).subscribe((res: any) => {
       this.category = res.data.items;
     });
   }
 
   _click(event: STChange): void {
-    console.log(event);
+    if (event.type == 'checkbox') {
+      this.delete = event.checkbox?.map((item: any) => item.id);
+    }
   }
+
+  deleteClick(event: any): void {
+    this.service.deleteList(this.delete).subscribe((res: any) => {
+      if (res.error == '0') {
+        this.message.success('成功删除');
+        this.findCategoryList();
+      }
+    });
+  }
+
+  handleContextmenu: STContextmenuFn = (options): STContextmenuItem[] => {
+    return [
+      {
+        text: '查看',
+        fn: () =>
+          this.modal.createStatic(ServeServiceCategoryCurdViewComponent, { record: options.data }).subscribe(() => console.log('查看'))
+      },
+
+      {
+        text: '编辑',
+        fn: () =>
+          this.modal
+            .createStatic(ServeServiceCategoryCurdEditComponent, { record: { ...options.data, flag: true } })
+            .subscribe(() => this.findCategoryList())
+      },
+
+      {
+        text: '删除',
+        fn: () => this.deleteClick(options.data)
+      }
+    ];
+  };
 }

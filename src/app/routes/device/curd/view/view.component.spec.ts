@@ -1,19 +1,19 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CameraCurdComponent } from './curd.component';
+import { DeviceCurdViewComponent } from './view.component';
 
-describe('CameraCurdComponent', () => {
-  let component: CameraCurdComponent;
-  let fixture: ComponentFixture<CameraCurdComponent>;
+describe('DeviceCurdViewComponent', () => {
+  let component: DeviceCurdViewComponent;
+  let fixture: ComponentFixture<DeviceCurdViewComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [CameraCurdComponent]
+      declarations: [DeviceCurdViewComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CameraCurdComponent);
+    fixture = TestBed.createComponent(DeviceCurdViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

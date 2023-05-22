@@ -1,5 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { STColumn, STComponent, STChange, STClickRowClassNameType } from '@delon/abc/st';
+import {
+  STColumn,
+  STComponent,
+  STChange,
+  STClickRowClassNameType,
+  STContextmenuFn,
+  STContextmenuItem,
+  STContextmenuOptions
+} from '@delon/abc/st';
 import { SFSchema } from '@delon/form';
 import { ModalHelper, _HttpClient } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -24,7 +32,7 @@ export class SystemPayCurdComponent implements OnInit {
   clickRowClassName: STClickRowClassNameType = { exclusive: true, fn: () => 'text-error' };
   @ViewChild('st') private readonly st!: STComponent;
   columns: STColumn[] = [
-    { title: '支付ID', index: 'id', width: 200 },
+    { title: '支付ID', index: 'id', type: 'checkbox' },
     { title: '平台', index: 'platForm', width: 100 },
     { title: '小程序ID', index: 'appId', width: 150 },
     { title: '小程序SECRET', index: 'appSecret', width: 150 },
@@ -38,21 +46,24 @@ export class SystemPayCurdComponent implements OnInit {
     { title: '回调接口2', index: 'notifyUrl2', width: 150 },
     { title: '回调接口3', index: 'notifyUrl3', width: 150 },
     {
-      title: '',
+      title: '操作',
       buttons: [
         {
           text: '查看',
-          icon: 'view',
           type: 'modal',
-          modal: { component: SystemPayCurdViewComponent },
-          click: (_record, modal) => this.message.success(`重新加载页面，回传值：${JSON.stringify(modal)}`)
+          modal: { component: SystemPayCurdViewComponent }
         },
         {
           text: '编辑',
           icon: 'edit',
           type: 'modal',
-          modal: { component: SystemPayCurdEditComponent },
-          click: (_record, modal) => this.message.success(`重新加载页面，回传值：${JSON.stringify(modal)}`)
+          modal: {
+            component: SystemPayCurdEditComponent,
+            params(record): any {
+              return (record.flag = true);
+            }
+          },
+          click: (_record, modal) => this.findPayList()
         }
       ]
     }
@@ -64,18 +75,39 @@ export class SystemPayCurdComponent implements OnInit {
     this.findPayList();
   }
 
-  add(): void {
-    this.modal.createStatic(SystemPayCurdEditComponent, { i: { id: 0 } }).subscribe(() => this.st.reload());
+  search(event: any): void {
+    const platForm = `~=${event.platForm}` + '';
+    this.findPayList(platForm);
   }
 
-  findPayList(): void {
-    this.service.findList().subscribe((res: any) => {
-      console.log(res);
+  reset(event: any): void {
+    this.findPayList();
+  }
+
+  add(): void {
+    this.modal.createStatic(SystemPayCurdEditComponent, { record: { flag: false } }).subscribe(() => this.findPayList());
+  }
+
+  findPayList(name?: any): void {
+    this.service.findList(name).subscribe((res: any) => {
       this.pay = res.data.items;
     });
   }
 
-  _click(event: STChange): void {
-    console.log(event);
-  }
+  handleContextmenu: STContextmenuFn = (options): STContextmenuItem[] => {
+    return [
+      {
+        text: '查看',
+        fn: () => this.modal.createStatic(SystemPayCurdViewComponent, { record: options.data }).subscribe(() => console.log('查看'))
+      },
+
+      {
+        text: '编辑',
+        fn: () =>
+          this.modal
+            .createStatic(SystemPayCurdEditComponent, { record: { ...options.data, flag: true } })
+            .subscribe(() => this.findPayList())
+      }
+    ];
+  };
 }

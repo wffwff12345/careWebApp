@@ -5,6 +5,7 @@ import { APP_INITIALIZER, Injector, LOCALE_ID, NgModule, Type } from '@angular/c
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { Observable } from 'rxjs';
 
@@ -80,7 +81,6 @@ import { LayoutModule } from './layout/layout.module';
 import { RoutesModule } from './routes/routes.module';
 import { SharedModule } from './shared/shared.module';
 import { STWidgetModule } from './shared/st-widget/st-widget.module';
-
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -95,6 +95,7 @@ import { STWidgetModule } from './shared/st-widget/st-widget.module';
     STWidgetModule,
     NzMessageModule,
     NzNotificationModule,
+    NzUploadModule,
     ...FORM_MODULES,
     ...GLOBAL_THIRD_MODULES
   ],

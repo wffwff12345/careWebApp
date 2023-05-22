@@ -9,13 +9,10 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
 })
 export class ServeServiceCategoryCurdViewComponent implements OnInit {
   record: any = {};
-  i: any;
 
   constructor(private modal: NzModalRef, private msgSrv: NzMessageService, private http: _HttpClient) {}
 
-  ngOnInit(): void {
-    this.http.get(`/user/${this.record.id}`).subscribe(res => (this.i = res));
-  }
+  ngOnInit(): void {}
 
   close(): void {
     this.modal.destroy();

@@ -5,6 +5,16 @@
   </ng-template>
 </page-header>
 <nz-card>
-  <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
-  <st #st [data]="community" [columns]="columns" (change)="_click($event)" [clickRowClassName]="clickRowClassName"></st>
+  <sf mode="search" [schema]="searchSchema" (formSubmit)="search($event)" (formReset)="reset($event)"></sf>
+  <div class="mb-md">
+    <button nz-button nzType="primary" (click)="deleteClick($event)">删除记录</button>
+  </div>
+  <st
+    #st
+    [data]="community"
+    [columns]="columns"
+    (change)="_click($event)"
+    [clickRowClassName]="clickRowClassName"
+    [contextmenu]="handleContextmenu"
+  ></st>
 </nz-card>

@@ -1,33 +1,36 @@
-import { Component, OnInit } from '@angular/core';
-import { SFSchema, SFUISchema } from '@delon/form';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { SFSchema, SFUISchema, SFComponent } from '@delon/form';
 import { _HttpClient } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef } from 'ng-zorro-antd/modal';
-
+import { CommunityService } from 'src/app/services';
 @Component({
   selector: 'app-community-curd-edit',
   templateUrl: './edit.component.html'
 })
 export class CommunityCurdEditComponent implements OnInit {
   record: any = {};
-  i: any;
+  array: string[] = [];
+  @ViewChild('sf', { static: false }) sf!: SFComponent;
   schema: SFSchema = {
     properties: {
-      no: { type: 'string', title: '编号' },
-      owner: { type: 'string', title: '姓名', maxLength: 15 },
-      callNo: { type: 'number', title: '调用次数' },
-      href: { type: 'string', title: '链接', format: 'uri' },
-      description: { type: 'string', title: '描述', maxLength: 140 }
+      no: {
+        type: 'string',
+        title: '社区编号',
+        ui: {
+          showRequired: true,
+          validator: val => (this.array.includes(val) && this.record.no !== val ? [{ keyword: 'not', message: '社区编号重复' }] : [])
+        }
+      },
+      name: { type: 'string', title: '社区名称' },
+      parentNo: { type: 'string', title: '父社区编号', enum: [], default: '0' }
     },
-    required: ['owner', 'callNo', 'href', 'description']
+    required: ['no', 'name', 'parentNo']
   };
   ui: SFUISchema = {
     '*': {
       spanLabelFixed: 100,
       grid: { span: 12 }
-    },
-    $no: {
-      widget: 'text'
     },
     $href: {
       widget: 'string'
@@ -38,16 +41,46 @@ export class CommunityCurdEditComponent implements OnInit {
     }
   };
 
-  constructor(private modal: NzModalRef, private msgSrv: NzMessageService, public http: _HttpClient) {}
+  constructor(private modal: NzModalRef, private msgSrv: NzMessageService, public http: _HttpClient, private service: CommunityService) {}
 
   ngOnInit(): void {
-    if (this.record.id > 0) this.http.get(`/user/${this.record.id}`).subscribe(res => (this.i = res));
+    this.findCommunityList();
   }
 
   save(value: any): void {
-    this.http.post(`/user/${this.record.id}`, value).subscribe(res => {
+    delete value.flag;
+    delete value._rowClassName;
+    if (this.record.id) {
+      this.service.update(value, this.record.id).subscribe((res: any) => {
+        this.sucess(res);
+      });
+    } else {
+      this.service.save(value).subscribe((res: any) => {
+        this.sucess(res);
+      });
+    }
+  }
+
+  sucess(res: any) {
+    if ('0' == res.error) {
       this.msgSrv.success('保存成功');
       this.modal.close(true);
+    }
+  }
+
+  findCommunityList(): void {
+    this.service.findList().subscribe((res: any) => {
+      const array = res.data.items
+        .sort((v1: any, v2: any) => {
+          if (v1.no > v2.no) return 1;
+          else if (v1.no < v2.no) return -1;
+          else return 0;
+        })
+        .map((item: any) => ({ label: `${item.no}-${item.name}`, value: item.no }));
+      array.unshift({ label: '', value: '0' });
+      this.schema.properties!['parentNo'].enum = array;
+      this.array = res.data.items.map((item: any) => item.no);
+      this.sf.refreshSchema();
     });
   }
 

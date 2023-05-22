@@ -54,28 +54,14 @@
             "main": "src/main.ts",
             "polyfills": [
               "zone.js"
-            ],
-            "tsConfig": "tsconfig.app.json",
+            ],            "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "less",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.less"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.less"],
             "scripts": [],
-            "allowedCommonJsDependencies": [
-              "ajv",
-              "ajv-formats",
-              "extend",
-              "file-saver",
-              "mockjs"
-            ],
+            "allowedCommonJsDependencies": ["ajv", "ajv-formats", "extend", "file-saver", "mockjs"],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "node_modules/"
-              ]
+              "includePaths": ["node_modules/"]
             }
           },
           "configurations": {
@@ -139,19 +125,14 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [
-              "src/styles.less"
-            ],
+            "styles": ["src/styles.less"],
             "scripts": []
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }
@@ -159,9 +140,6 @@
   },
   "cli": {
     "analytics": false,
-    "schematicCollections": [
-      "@schematics/angular",
-      "ng-alain"
-    ]
+    "schematicCollections": ["@schematics/angular", "ng-alain"]
   }
 }

@@ -1,4 +1,4 @@
-export class Camera {
+export class Device {
   id: number;
 
   deviceSerial: string;
