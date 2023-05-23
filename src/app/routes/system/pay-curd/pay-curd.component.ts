@@ -33,7 +33,7 @@ export class SystemPayCurdComponent implements OnInit {
   @ViewChild('st') private readonly st!: STComponent;
   columns: STColumn[] = [
     { title: '支付ID', index: 'id', type: 'checkbox' },
-    { title: '平台', index: 'platForm', width: 100 },
+    { title: '支付平台', index: 'platForm', width: 100 },
     { title: '小程序ID', index: 'appId', width: 150 },
     { title: '小程序SECRET', index: 'appSecret', width: 150 },
     { title: '商户号', index: 'mchId', sort: true, width: 150 },

@@ -60,12 +60,7 @@ export class ServeServiceCategoryCurdComponent implements OnInit {
           text: '删除',
           icon: 'delete',
           click: i => {
-            this.service.delete(i.id).subscribe((res: any) => {
-              if (res.error == '0') {
-                this.message.success('成功删除');
-                this.findCategoryList();
-              }
-            });
+            this.deleteRow(i);
           }
         }
       ]
@@ -112,6 +107,15 @@ export class ServeServiceCategoryCurdComponent implements OnInit {
     });
   }
 
+  deleteRow(event: any): void {
+    this.service.delete(event.id).subscribe((res: any) => {
+      if (res.error == '0') {
+        this.message.success('成功删除');
+        this.findCategoryList();
+      }
+    });
+  }
+
   handleContextmenu: STContextmenuFn = (options): STContextmenuItem[] => {
     return [
       {
@@ -130,7 +134,7 @@ export class ServeServiceCategoryCurdComponent implements OnInit {
 
       {
         text: '删除',
-        fn: () => this.deleteClick(options.data)
+        fn: item => this.deleteRow(options.data)
       }
     ];
   };

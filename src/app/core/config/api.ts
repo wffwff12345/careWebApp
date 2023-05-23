@@ -59,6 +59,11 @@ export class Api {
   };
 
   static user = class {
+    public static readonly add: string = '/api/user';
+    public static readonly delete: string = '/api/user/';
+    public static readonly deleteList: string = '/api/user/delete';
+    public static readonly update: string = '/api/user/';
+    public static readonly getUser: string = '/api/user/';
     public static readonly userList: string = '/api/user/page';
   };
 

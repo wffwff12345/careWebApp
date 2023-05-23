@@ -3,7 +3,7 @@ import { SFSchema, SFUISchema, SFComponent } from '@delon/form';
 import { _HttpClient } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef } from 'ng-zorro-antd/modal';
-import { UserService, DeviceService } from 'src/app/services';
+import { SystemUserCurdService, DeviceService } from 'src/app/services';
 @Component({
   selector: 'app-device-curd-edit',
   templateUrl: './edit.component.html'
@@ -52,7 +52,7 @@ export class DeviceCurdEditComponent implements OnInit {
   constructor(
     private modal: NzModalRef,
     private msgSrv: NzMessageService,
-    private userService: UserService,
+    private userService: SystemUserCurdService,
     private deviceService: DeviceService,
     public http: _HttpClient
   ) {}

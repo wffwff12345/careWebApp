@@ -12,6 +12,4 @@ export * from './serve/category.service';
 export * from './system/user.service';
 export * from './system/pay.service';
 export * from './system/upload.service';
-
-// user
-export * from './user/user.service';
+export * from './system/recommend.service';

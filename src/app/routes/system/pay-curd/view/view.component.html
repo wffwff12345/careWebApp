@@ -2,14 +2,14 @@
   <div class="modal-title">查看 {{ record.id }} 系统支付信息</div>
 </div>
 <nz-spin *ngIf="!record" class="modal-spin"></nz-spin>
-<div sv-container *ngIf="record">
+<div sv-container *ngIf="record" col="2">
   <sv label="平台">{{ record.platForm }}</sv>
+  <sv label="商户号">{{ record.mchId }}</sv>
   <sv label="小程序ID">{{ record.appId }}</sv>
   <sv label="小程序SECRET">{{ record.appSecret }}</sv>
-  <sv label="商户号">{{ record.mchId }}</sv>
-  <sv label="API密钥">{{ record.apiKey }}</sv>
   <sv label="证书上传地址">{{ record.certClient }}</sv>
   <sv label="证书密钥">{{ record.certKey }}</sv>
+  <sv label="API密钥">{{ record.apiKey }}</sv>
   <sv label="支付宝公钥">{{ record.aliPublicKey }}</sv>
   <sv label="支付宝私钥">{{ record.privateKey }}</sv>
   <sv label="回调接口1">{{ record.notifyUrl1 }}</sv>

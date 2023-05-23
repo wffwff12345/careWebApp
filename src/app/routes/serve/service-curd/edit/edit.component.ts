@@ -14,18 +14,13 @@ import { ServeServiceCurdService, ServeCategoryCurdService, UploadService } from
 export class ServeServiceCurdEditComponent implements OnInit {
   record: any = {};
   array: string[] = [];
-  picList: NzUploadFile[] = [
-    {
-      uid: '-1',
-      name: 'image.png',
-      status: 'done',
-      url: ''
-    }
-  ];
+  picList: NzUploadFile[] = [];
   imgList: NzUploadFile[] = [];
+  picIdList: string[] = ['1'];
   @ViewChild('sf', { static: false }) sf!: SFComponent;
   schema: SFSchema = {
     properties: {
+      categoryNo: { type: 'string', title: '服务类别编号', enum: [] },
       no: {
         type: 'string',
         title: '服务编号',
@@ -36,7 +31,7 @@ export class ServeServiceCurdEditComponent implements OnInit {
       },
       name: { type: 'string', title: '服务名称' },
       price: { type: 'string', title: '价格' },
-      categoryNo: { type: 'string', title: '服务类别编号', enum: [] },
+      description: { type: 'string', title: '描述' },
       thumbnailPath: {
         type: 'string',
         title: '图片',
@@ -44,7 +39,6 @@ export class ServeServiceCurdEditComponent implements OnInit {
           widget: 'custom'
         }
       },
-      description: { type: 'string', title: '描述' },
       imgList: {
         type: 'string',
         title: '详情图片',
@@ -53,7 +47,7 @@ export class ServeServiceCurdEditComponent implements OnInit {
         }
       }
     },
-    required: ['no', 'name', 'thumbnailPath', 'price', 'categoryNo']
+    required: ['no', 'name', 'price', 'categoryNo']
   };
   ui: SFUISchema = {
     '*': {
@@ -80,17 +74,18 @@ export class ServeServiceCurdEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.record.thumbnailPath);
-    this.picList[0].url = this.record.thumbnailPath;
     this.findCategoryList();
+    this.handleImgList();
   }
 
   save(value: any): void {
     delete value.flag;
     delete value._rowClassName;
+    value.thumbnailId = this.picIdList[0];
+    value.thumbnailPath = this.picList[0].url?.replace(`${environment.SERVER_URL}/`, '');
+    const array = this.imgList.map((img: any) => img.url?.replace(`${environment.SERVER_URL}/`, ''));
+    value.imgList = [...array];
     console.log(value);
-    /* const pic = value.thumbnailPath.data;
-    value = { ...value, thumbnailId: pic.id, thumbnailPath: pic.path };
     if (this.record.id) {
       this.service.update(value, this.record.id).subscribe((res: any) => {
         this.sucess(res);
@@ -99,7 +94,7 @@ export class ServeServiceCurdEditComponent implements OnInit {
       this.service.save(value).subscribe((res: any) => {
         this.sucess(res);
       });
-    } */
+    }
   }
 
   sucess(res: any) {
@@ -123,9 +118,32 @@ export class ServeServiceCurdEditComponent implements OnInit {
     });
     this.service.findList().subscribe((res: any) => {
       this.array = res.data.items.map((i: any) => i.no);
-      // this.schema.properties!['thumbnailPath'].enum = this.record.thumbnailPath;
       this.sf.refreshSchema();
     });
+  }
+  handleImgList() {
+    if (this.record.flag) {
+      let pic: any = {
+        uid: '-1',
+        name: `image.png`,
+        status: 'done',
+        url: this.record.thumbnailPath
+      };
+      this.picList.push(pic);
+      if (this.record.imgList.length <= 0) {
+        return;
+      }
+      let i: number = -1;
+      this.record.imgList.forEach((element: any) => {
+        let img: any = {
+          uid: i.toString(),
+          name: `image${++i}.png`,
+          status: 'done',
+          url: element
+        };
+        this.imgList.push(img);
+      });
+    }
   }
 
   close(): void {
@@ -142,18 +160,45 @@ export class ServeServiceCurdEditComponent implements OnInit {
     return true;
   };
 
-  changeImage(event: any) {
-    console.log(event);
+  picChange(file: any) {
+    file.file.status = 'done';
+    console.log(file);
+    if (file.type == 'removed') {
+      this.record.thumbnailPath = null;
+      this.picList = [];
+      console.log(this.picList);
+    }
   }
+
+  imgChange(file: any) {
+    file.file.status = 'done';
+    console.log(file);
+    if (file.type == 'removed') {
+      console.log();
+    }
+  }
+
   // 上传
   picListUpload = (file: any) => {
     const fd = new FormData();
-    console.log(file);
-    console.log(file.file);
     fd.append('file', file.file as any, file.file.name);
-    console.log(fd.get('file'));
+    fd.append('groupNo', 'serve');
     return this.uploadService.addPicture(fd).subscribe((res: any) => {
       console.log(res);
+      this.picIdList[0] = res.data.id;
+      const url = `${environment.SERVER_URL}/${res.data.path}`;
+      this.picList[0].url = url;
+      // this.record.thumbnailPath = url;
+    });
+  };
+
+  imgPicListUpload = (file: any) => {
+    const fd = new FormData();
+    fd.append('file', file.file as any, file.file.name);
+    fd.append('groupNo', 'serve');
+    return this.uploadService.addPicture(fd).subscribe((res: any) => {
+      const url = `${environment.SERVER_URL}/${res.data.path}`;
+      this.imgList[this.imgList.length - 1].url = url;
     });
   };
 }

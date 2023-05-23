@@ -71,12 +71,7 @@ export class DeviceCurdComponent implements OnInit {
           text: '删除',
           icon: 'delete',
           click: i => {
-            this.service.delete(i.id).subscribe((res: any) => {
-              if (res.error == '0') {
-                this.message.success('成功删除');
-                this.findDeviceList();
-              }
-            });
+            this.deleteRow(i);
           }
         }
       ]
@@ -126,6 +121,15 @@ export class DeviceCurdComponent implements OnInit {
     });
   }
 
+  deleteRow(event: any): void {
+    this.service.delete(event.id).subscribe((res: any) => {
+      if (res.error == '0') {
+        this.message.success('成功删除');
+        this.findDeviceList();
+      }
+    });
+  }
+
   handleContextmenu: STContextmenuFn = (options): STContextmenuItem[] => {
     return [
       {
@@ -143,7 +147,7 @@ export class DeviceCurdComponent implements OnInit {
 
       {
         text: '删除',
-        fn: () => this.deleteClick(options.data)
+        fn: item => this.deleteRow(options.data)
       }
     ];
   };

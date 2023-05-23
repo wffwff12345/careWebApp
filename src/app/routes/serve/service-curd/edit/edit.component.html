@@ -10,11 +10,9 @@
       [(nzFileList)]="picList"
       nzAccept=".png,.jpeg,.jpg"
       [nzBeforeUpload]="beforeUpload"
-      [nzData]="{ groupNo: 'serve' }"
-      nzAction="/api/upload"
       [nzCustomRequest]="picListUpload"
       [nzMultiple]="false"
-      (nzChange)="changeImage($event)"
+      (nzChange)="picChange($event)"
       [nzDisabled]="picList.length > 0"
     >
       <p class="ant-upload-drag-icon">
@@ -30,10 +28,9 @@
       [(nzFileList)]="imgList"
       nzAccept=".png,.jpeg,.jpg"
       [nzBeforeUpload]="imgBeforeUpload"
-      [nzData]="{ groupNo: 'serve' }"
-      nzAction="/api/upload"
+      [nzCustomRequest]="imgPicListUpload"
       [nzMultiple]="false"
-      (nzChange)="changeImage($event)"
+      (nzChange)="imgChange($event)"
     >
       <p class="ant-upload-drag-icon">
         <i nz-icon nzType="inbox"></i>

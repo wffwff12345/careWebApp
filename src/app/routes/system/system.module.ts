@@ -1,5 +1,6 @@
 import { NgModule, Type } from '@angular/core';
 import { SharedModule } from '@shared';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
 
 import { SystemPayCurdEditComponent } from './pay-curd/edit/edit.component';
 import { SystemPayCurdComponent } from './pay-curd/pay-curd.component';
@@ -25,7 +26,7 @@ const COMPONENTS: Array<Type<void>> = [
 ];
 
 @NgModule({
-  imports: [SharedModule, SystemRoutingModule],
+  imports: [SharedModule, SystemRoutingModule, NzUploadModule],
   declarations: COMPONENTS
 })
 export class SystemModule {}
