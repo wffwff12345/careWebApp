@@ -36,7 +36,15 @@ export class CommunityCurdComponent implements OnInit {
   columns: STColumn[] = [
     { title: '社区ID', index: 'id', type: 'checkbox' },
     { title: '社区编号', index: 'no', sort: true },
-    { title: '社区名称', index: 'name' },
+    {
+      title: '社区名称',
+      index: 'name',
+      filter: {
+        type: 'keyword',
+        placeholder: '输入后按回车搜索',
+        fn: (filter, record) => !filter.value || record.name.indexOf(filter.value) !== -1
+      }
+    },
     { title: '父社区编号', index: 'parentNo', sort: true },
     {
       title: '操作',

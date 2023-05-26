@@ -1,1 +1,16 @@
-<page-header></page-header>
+<page-header>
+  <button nz-button (click)="refresh()" nzType="primary">刷新</button>
+  <g2-pie
+    #pie
+    [hasLegend]="true"
+    title="服务订单"
+    subTitle="服务订单"
+    [total]="total"
+    [valueFormat]="format"
+    [data]="salesPieData"
+    height="294"
+    repaint="true"
+    (clickItem)="handleClick($event)"
+  >
+  </g2-pie>
+</page-header>

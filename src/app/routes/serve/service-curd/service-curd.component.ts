@@ -37,7 +37,16 @@ export class ServeServiceCurdComponent implements OnInit {
   columns: STColumn[] = [
     { title: '服务ID', index: 'id', type: 'checkbox' },
     { title: '服务编号', index: 'no', sort: true, width: 150 },
-    { title: '服务名称', index: 'name', width: 150 },
+    {
+      title: '服务名称',
+      index: 'name',
+      width: 150,
+      filter: {
+        type: 'keyword',
+        placeholder: '输入后按回车搜索',
+        fn: (filter, record) => !filter.value || record.name.indexOf(filter.value) !== -1
+      }
+    },
     { title: '图片', type: 'img', index: 'thumbnailPath', width: 100 },
     { title: '价格', index: 'price', sort: true, width: 150 },
     { title: '服务类别编号', index: 'categoryNo', width: 150, sort: true },
@@ -98,6 +107,7 @@ export class ServeServiceCurdComponent implements OnInit {
       this.serve = res.data.items;
       this.serve.forEach((element: any) => {
         element.thumbnailPath = `${environment.SERVER_URL}/${element.thumbnailPath}`;
+        element.price = element.price.toFixed(2);
         element.imgList = element.imgList.map((item: any) => `${environment.SERVER_URL}/${item}`);
       });
     });

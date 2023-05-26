@@ -8,6 +8,10 @@ export * from './community/community.service';
 export * from './serve/serve.service';
 export * from './serve/category.service';
 
+// order
+
+export * from './order/order.service';
+
 // system
 export * from './system/user.service';
 export * from './system/pay.service';

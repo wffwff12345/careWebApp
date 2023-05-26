@@ -6,7 +6,7 @@
   <sv label="设备序列号">{{ record.deviceSerial }}</sv>
   <sv label="验证码">{{ record.verifyCode }}</sv>
   <sv label="设备名称">{{ record.name }}</sv>
-  <sv label="设备类型">{{ record.deviceType == '0' ? '摄像头' : '检测设备' }}</sv>
+  <sv label="设备类型">{{ record.deviceType == '0' ? '摄像头' : record.deviceType == '1' ? '检测设备' : '定位设备' }}</sv>
   <sv label="用户编号">{{ record.userNo }}</sv>
 </div>
 <div class="modal-footer">

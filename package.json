@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "run": "node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng serve -o",
-    "start": "npm run color-less && ng s -o --host=0.0.0.0",
+    "start": "ng serve --host=0.0.0.0",
     "build": "npm run color-less && node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --prod",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",

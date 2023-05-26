@@ -44,7 +44,7 @@ export class DeviceCurdComponent implements OnInit {
         fn: (filter, record) => !filter.value || record.name.indexOf(filter.value) !== -1
       }
     },
-    { title: '设备类型', index: 'deviceType', type: 'enum', enum: { '0': '摄像头', '1': '检测设备' } },
+    { title: '设备类型', index: 'deviceType', type: 'enum', enum: { '0': '摄像头', '1': '检测设备', '2': '定位设备' } },
     { title: '验证码', index: 'verifyCode' },
     { title: '用户编号', index: 'userNo' },
     {

@@ -14,7 +14,7 @@ import { SystemRecommendService, UploadService } from 'src/app/services';
 export class SystemRecommendCurdEditComponent implements OnInit {
   record: any = {};
   picList: NzUploadFile[] = [];
-  picIdList: string[] = ['1'];
+  picIdList: string[] = [];
 
   schema: SFSchema = {
     properties: {
@@ -67,6 +67,7 @@ export class SystemRecommendCurdEditComponent implements OnInit {
         status: 'done',
         url: this.record.thumbnailPath
       };
+      this.picIdList.push(this.record.thumbnailId);
       this.picList.push(pic);
     }
   }

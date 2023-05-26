@@ -14,14 +14,16 @@ export class DeviceCurdEditComponent implements OnInit {
   schema: SFSchema = {
     properties: {
       deviceSerial: { type: 'string', title: '设备序列号', readOnly: false },
-      verifyCode: { type: 'string', title: '验证码' },
+      verifyCode: { type: 'string', title: '验证码', default: '123456' },
       name: { type: 'string', title: '设备名称' },
       deviceType: {
         type: 'string',
         title: '设备类型',
+        default: '0',
         enum: [
           { label: '摄像头', value: '0' },
-          { label: '检测设备', value: '1' }
+          { label: '检测设备', value: '1' },
+          { label: '定位设备', value: '2' }
         ]
       },
       userNo: {
@@ -84,7 +86,7 @@ export class DeviceCurdEditComponent implements OnInit {
 
   findUserList(data?: any): void {
     this.userService.findList(data).subscribe((res: any) => {
-      const array = res.data.items.map((item: any) => item.no);
+      const array = res.data.items.map((item: any) => ({ label: `${item.name ? `${item.name}-` : ''}${item.no}`, value: item.no }));
       this.schema.properties!['userNo'].enum = array;
       if (this.record.flag) this.schema.properties!['deviceSerial'].readOnly = this.record.flag;
       this.sf.refreshSchema();

@@ -70,4 +70,8 @@ export class Api {
   static upload = class {
     public static readonly addPicture: string = '/api/upload';
   };
+
+  static order = class {
+    public static readonly orderList: string = '/api/order/order-list';
+  };
 }

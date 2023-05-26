@@ -45,7 +45,15 @@ export class SystemUserCurdComponent implements OnInit {
   @ViewChild('st') private readonly st!: STComponent;
   columns: STColumn[] = [
     { title: '用户ID', index: 'id', type: 'checkbox' },
-    { title: '用户编号', index: 'no' },
+    {
+      title: '用户编号',
+      index: 'no',
+      filter: {
+        type: 'keyword',
+        placeholder: '输入后按回车搜索',
+        fn: (filter, record) => !filter.value || record.no.indexOf(filter.value) !== -1
+      }
+    },
     { title: '用户名称', index: 'name' },
     { title: '用户头像', type: 'img', index: 'avatarPath' },
     { title: '角色', index: 'role', type: 'tag', tag: TAG },

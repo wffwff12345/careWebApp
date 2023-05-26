@@ -18,29 +18,7 @@
         {
           "text": "仪表盘",
           "i18n": "menu.dashboard",
-          "icon": "anticon-dashboard",
-          "children": [
-            {
-              "text": "仪表盘V1",
-              "link": "/dashboard/v1",
-              "i18n": "menu.dashboard.v1"
-            },
-            {
-              "text": "分析页",
-              "link": "/dashboard/analysis",
-              "i18n": "menu.dashboard.analysis"
-            },
-            {
-              "text": "监控页",
-              "link": "/dashboard/monitor",
-              "i18n": "menu.dashboard.monitor"
-            },
-            {
-              "text": "工作台",
-              "link": "/dashboard/workplace",
-              "i18n": "menu.dashboard.workplace"
-            }
-          ]
+          "icon": "anticon-dashboard"
         },
         {
           "text": "设备管理",
@@ -60,12 +38,12 @@
           "icon": "anticon-gold",
           "children": [
             {
-              "text": "服务类别列表",
+              "text": "服务类别管理",
               "link": "/serve/service-category-curd",
               "i18n": "menu.serve.category"
             },
             {
-              "text": "服务列表",
+              "text": "服务管理",
               "link": "/serve/service-curd",
               "i18n": "menu.serve.list"
             }
@@ -87,7 +65,7 @@
               "link": "/system/recommend-curd"
             },
             {
-              "text": "用户列表",
+              "text": "用户管理",
               "i18n": "menu.system.user",
               "link": "/system/user-curd"
             }

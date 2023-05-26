@@ -1,3 +1,4 @@
+import { HttpEvent } from '@angular/common/http';
 import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SFSchema, SFUISchema, SFComponent, SFUploadWidgetSchema } from '@delon/form';
@@ -16,7 +17,7 @@ export class ServeServiceCurdEditComponent implements OnInit {
   array: string[] = [];
   picList: NzUploadFile[] = [];
   imgList: NzUploadFile[] = [];
-  picIdList: string[] = ['1'];
+  picIdList: string[] = [];
   @ViewChild('sf', { static: false }) sf!: SFComponent;
   schema: SFSchema = {
     properties: {
@@ -30,7 +31,7 @@ export class ServeServiceCurdEditComponent implements OnInit {
         }
       },
       name: { type: 'string', title: '服务名称' },
-      price: { type: 'string', title: '价格' },
+      price: { type: 'number', title: '价格' },
       description: { type: 'string', title: '描述' },
       thumbnailPath: {
         type: 'string',
@@ -129,6 +130,7 @@ export class ServeServiceCurdEditComponent implements OnInit {
         status: 'done',
         url: this.record.thumbnailPath
       };
+      this.picIdList.push(this.record.thumbnailId);
       this.picList.push(pic);
       if (this.record.imgList.length <= 0) {
         return;
@@ -150,7 +152,7 @@ export class ServeServiceCurdEditComponent implements OnInit {
     this.modal.destroy();
   }
 
-  beforeUpload = (file: NzUploadFile): boolean => {
+  picBeforeUpload = (file: NzUploadFile): boolean => {
     this.picList = this.picList.concat(file);
     return true;
   };
@@ -162,7 +164,6 @@ export class ServeServiceCurdEditComponent implements OnInit {
 
   picChange(file: any) {
     file.file.status = 'done';
-    console.log(file);
     if (file.type == 'removed') {
       this.record.thumbnailPath = null;
       this.picList = [];
@@ -188,6 +189,9 @@ export class ServeServiceCurdEditComponent implements OnInit {
       this.picIdList[0] = res.data.id;
       const url = `${environment.SERVER_URL}/${res.data.path}`;
       this.picList[0].url = url;
+      const event: any = {};
+      event.percent = 100;
+      file.onProgress!(event, file.file!);
       // this.record.thumbnailPath = url;
     });
   };
@@ -199,6 +203,9 @@ export class ServeServiceCurdEditComponent implements OnInit {
     return this.uploadService.addPicture(fd).subscribe((res: any) => {
       const url = `${environment.SERVER_URL}/${res.data.path}`;
       this.imgList[this.imgList.length - 1].url = url;
+      const event: any = {};
+      event.percent = 100;
+      file.onProgress!(event, file.file!);
     });
   };
 }

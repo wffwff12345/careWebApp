@@ -9,7 +9,7 @@
       nzListType="picture"
       [(nzFileList)]="picList"
       nzAccept=".png,.jpeg,.jpg"
-      [nzBeforeUpload]="beforeUpload"
+      [nzBeforeUpload]="picBeforeUpload"
       [nzCustomRequest]="picListUpload"
       [nzMultiple]="false"
       (nzChange)="picChange($event)"
